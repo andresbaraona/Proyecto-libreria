@@ -69,7 +69,6 @@ void registrarUsuario() {
     cout << "Ingrese el nombre de usuario: ";
     cin >> nombre;
 
-    // Verificar si el usuario ya existe
     for (int i = 0; i < totalUsuarios; i++) {
         if (usuarios[i].nombre == nombre) {
             existe = true;
@@ -103,6 +102,19 @@ void registrarUsuario() {
     }
 }
 
+// Funcion de ayuda
+void mostrarAyuda() {
+    cout << "\n===== AYUDA DEL SISTEMA =====" << endl;
+    cout << "Bienvenido al sistema de biblioteca." << endl;
+    cout << "\nInstrucciones:" << endl;
+    cout << "1. Inicie sesion con su usuario y clave." << endl;
+    cout << "2. Seleccione una opcion del menu." << endl;
+    cout << "3. El administrador puede registrar usuarios." << endl;
+    cout << "4. El lector podra consultar libros y prestamos." << endl;
+    cout << "5. Seleccione cerrar sesion para salir del menu." << endl;
+    cout << "\nSi tiene problemas, contacte al administrador." << endl;
+}
+
 // Menu del administrador
 void menuAdministrador() {
     int opcion;
@@ -110,13 +122,45 @@ void menuAdministrador() {
     do {
         cout << "\n===== MENU ADMINISTRADOR =====" << endl;
         cout << "1. Registrar usuario" << endl;
-        cout << "2. Cerrar sesion" << endl;
+        cout << "2. Mostrar ayuda" << endl;
+        cout << "3. Cerrar sesion" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcion;
 
         switch (opcion) {
             case 1:
                 registrarUsuario();
+                break;
+
+            case 2:
+                mostrarAyuda();
+                break;
+
+            case 3:
+                cout << "\nCerrando sesion..." << endl;
+                break;
+
+            default:
+                cout << "\nOpcion no valida." << endl;
+        }
+
+    } while (opcion != 3);
+}
+
+// Menu del lector
+void menuLector() {
+    int opcion;
+
+    do {
+        cout << "\n===== MENU LECTOR =====" << endl;
+        cout << "1. Mostrar ayuda" << endl;
+        cout << "2. Cerrar sesion" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                mostrarAyuda();
                 break;
 
             case 2:
@@ -142,6 +186,7 @@ int main() {
             menuAdministrador();
         } else {
             cout << "Has ingresado como LECTOR." << endl;
+            menuLector();
         }
     } else {
         cout << "\nSe agotaron los intentos." << endl;
