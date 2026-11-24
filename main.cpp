@@ -308,6 +308,13 @@ void mostrarAyuda() {
     cout << "\nSi tiene problemas, contacte al administrador." << endl;
 }
 
+// Mostrar integrantes del proyecto
+void mostrarIntegrantes() {
+    cout << "\n===== INTEGRANTES DEL PROYECTO =====" << endl;
+    cout << "Nombre: Carlos Baraona" << endl;
+    cout << "Carnet: 00373424" << endl;
+}
+
 // Menu del administrador
 void menuAdministrador() {
     int opcion;
@@ -321,7 +328,8 @@ void menuAdministrador() {
         cout << "5. Buscar libro" << endl;
         cout << "6. Prestar libro" << endl;
         cout << "7. Devolver libro" << endl;
-        cout << "8. Cerrar sesion" << endl;
+        cout << "8. Mostrar integrantes" << endl;
+        cout << "9. Cerrar sesion" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcion;
 
@@ -355,14 +363,21 @@ void menuAdministrador() {
                 break;
 
             case 8:
+                mostrarIntegrantes();
+                break;
+
+            case 9:
                 cout << "\nCerrando sesion..." << endl;
                 break;
 
+        
+
+          
             default:
                 cout << "\nOpcion no valida." << endl;
         }
 
-    } while (opcion != 8);
+    } while (opcion != 9);
 }
 
 
