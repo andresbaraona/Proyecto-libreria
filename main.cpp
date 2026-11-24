@@ -19,6 +19,18 @@ struct Libro {
     int cantidad;
 };
 
+// Estructura de los prestamos
+struct Prestamo {
+    int id;
+    int idLibro;
+    string usuario;
+    bool activo;
+};
+
+// Arreglo de prestamos
+Prestamo prestamos[100];
+int totalPrestamos = 0;
+
 // Arreglo de libros
 Libro libros[100];
 int totalLibros = 0;
@@ -187,6 +199,102 @@ void buscarLibro() {
     }
 }
 
+
+// Registrar un prestamo
+void prestarLibro() {
+    if (totalPrestamos >= 100) {
+        cout << "\nNo se pueden registrar mas prestamos." << endl;
+        return;
+    }
+
+    int idLibro;
+    string nombreUsuario;
+    int posicionLibro = -1;
+    bool usuarioExiste = false;
+
+    cout << "\n===== PRESTAR LIBRO =====" << endl;
+
+    cout << "Ingrese el ID del libro: ";
+    cin >> idLibro;
+
+    // Buscar el libro
+    for (int i = 0; i < totalLibros; i++) {
+        if (libros[i].id == idLibro) {
+            posicionLibro = i;
+        }
+    }
+
+    if (posicionLibro == -1) {
+        cout << "No existe un libro con ese ID." << endl;
+        return;
+    }
+
+    if (libros[posicionLibro].cantidad <= 0) {
+        cout << "No hay ejemplares disponibles." << endl;
+        return;
+    }
+
+    cout << "Ingrese el nombre del lector: ";
+    cin >> nombreUsuario;
+
+    // Verificar que el usuario exista y sea lector
+    for (int i = 0; i < totalUsuarios; i++) {
+        if (usuarios[i].nombre == nombreUsuario &&
+            usuarios[i].rol == 2) {
+            usuarioExiste = true;
+        }
+    }
+
+    if (usuarioExiste == false) {
+        cout << "El lector no existe." << endl;
+        return;
+    }
+
+    // Registrar el prestamo
+    prestamos[totalPrestamos].id = totalPrestamos + 1;
+    prestamos[totalPrestamos].idLibro = idLibro;
+    prestamos[totalPrestamos].usuario = nombreUsuario;
+    prestamos[totalPrestamos].activo = true;
+
+    totalPrestamos++;
+
+    // Restar un ejemplar del inventario
+    libros[posicionLibro].cantidad--;
+
+    cout << "\nPrestamo registrado correctamente." << endl;
+}
+
+// Devolver un libro
+void devolverLibro() {
+    int idPrestamo;
+    bool encontrado = false;
+
+    cout << "\n===== DEVOLVER LIBRO =====" << endl;
+    cout << "Ingrese el ID del prestamo: ";
+    cin >> idPrestamo;
+
+    for (int i = 0; i < totalPrestamos; i++) {
+        if (prestamos[i].id == idPrestamo &&
+            prestamos[i].activo == true) {
+
+            for (int j = 0; j < totalLibros; j++) {
+                if (libros[j].id == prestamos[i].idLibro) {
+                    libros[j].cantidad++;
+                }
+            }
+
+            prestamos[i].activo = false;
+            encontrado = true;
+
+            cout << "\nLibro devuelto correctamente." << endl;
+        }
+    }
+
+    if (encontrado == false) {
+        cout << "\nNo se encontro un prestamo activo con ese ID." << endl;
+    }
+}
+
 // Funcion de ayuda
 void mostrarAyuda() {
     cout << "\n===== AYUDA DEL SISTEMA =====" << endl;
@@ -201,7 +309,6 @@ void mostrarAyuda() {
 }
 
 // Menu del administrador
-
 void menuAdministrador() {
     int opcion;
 
@@ -212,7 +319,9 @@ void menuAdministrador() {
         cout << "3. Registrar libro" << endl;
         cout << "4. Listar libros" << endl;
         cout << "5. Buscar libro" << endl;
-        cout << "6. Cerrar sesion" << endl;
+        cout << "6. Prestar libro" << endl;
+        cout << "7. Devolver libro" << endl;
+        cout << "8. Cerrar sesion" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcion;
 
@@ -238,6 +347,14 @@ void menuAdministrador() {
                 break;
 
             case 6:
+                prestarLibro();
+                break;
+
+            case 7:
+                devolverLibro();
+                break;
+
+            case 8:
                 cout << "\nCerrando sesion..." << endl;
                 break;
 
@@ -245,8 +362,9 @@ void menuAdministrador() {
                 cout << "\nOpcion no valida." << endl;
         }
 
-    } while (opcion != 6);
+    } while (opcion != 8);
 }
+
 
 // Menu del lector
 void menuLector() {
