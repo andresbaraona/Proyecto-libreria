@@ -295,6 +295,30 @@ void devolverLibro() {
     }
 }
 
+// Mostrar reporte de la biblioteca
+void mostrarReporte() {
+    int totalEjemplares = 0;
+    int prestamosActivos = 0;
+
+    // Contar los ejemplares disponibles
+    for (int i = 0; i < totalLibros; i++) {
+        totalEjemplares = totalEjemplares + libros[i].cantidad;
+    }
+
+    // Contar los prestamos que siguen activos
+    for (int i = 0; i < totalPrestamos; i++) {
+        if (prestamos[i].activo == true) {
+            prestamosActivos++;
+        }
+    }
+
+    cout << "\n===== REPORTE DE LA BIBLIOTECA =====" << endl;
+    cout << "Libros registrados: " << totalLibros << endl;
+    cout << "Ejemplares disponibles: " << totalEjemplares << endl;
+    cout << "Prestamos registrados: " << totalPrestamos << endl;
+    cout << "Prestamos activos: " << prestamosActivos << endl;
+}
+
 // Funcion de ayuda
 void mostrarAyuda() {
     cout << "\n===== AYUDA DEL SISTEMA =====" << endl;
@@ -321,6 +345,7 @@ void menuAdministrador() {
 
     do {
         cout << "\n===== MENU ADMINISTRADOR =====" << endl;
+       
         cout << "1. Registrar usuario" << endl;
         cout << "2. Mostrar ayuda" << endl;
         cout << "3. Registrar libro" << endl;
@@ -328,10 +353,12 @@ void menuAdministrador() {
         cout << "5. Buscar libro" << endl;
         cout << "6. Prestar libro" << endl;
         cout << "7. Devolver libro" << endl;
-        cout << "8. Mostrar integrantes" << endl;
-        cout << "9. Cerrar sesion" << endl;
+        cout << "8. Mostrar reporte" << endl;
+        cout << "9. Mostrar integrantes" << endl;
+        cout << "10. Cerrar sesion" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcion;
+
 
         switch (opcion) {
             case 1:
@@ -362,22 +389,24 @@ void menuAdministrador() {
                 devolverLibro();
                 break;
 
+            
             case 8:
-                mostrarIntegrantes();
+                mostrarReporte();
                 break;
 
             case 9:
-                cout << "\nCerrando sesion..." << endl;
+                mostrarIntegrantes();
                 break;
 
-        
-
+            case 10:
+                cout << "\nCerrando sesion..." << endl;
+                break;
           
             default:
                 cout << "\nOpcion no valida." << endl;
         }
 
-    } while (opcion != 9);
+    } while (opcion != 10);
 }
 
 
