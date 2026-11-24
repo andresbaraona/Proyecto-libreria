@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="Flujograma_Biblioteca"/>
+        <attribute name="authors" value="User"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-11-24 11:30:08 a.&#160;m."/>
+        <attribute name="created" value="VXNlcjtERVNLVE9QLUxSUTFCQ0o7MjAyNi0xMS0yNDsxMDoyNzozNCBhLsKgbS47MzA3Mw=="/>
+        <attribute name="edited" value="VXNlcjtERVNLVE9QLUxSUTFCQ0o7MjAyNi0xMS0yNDsxMTozMDowOCBhLsKgbS47MTszMTc3"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="nombre" type="String" array="False" size=""/>
+            <declare name="clave" type="String" array="False" size=""/>
+            <declare name="titulo" type="String" array="False" size=""/>
+            <declare name="autor" type="String" array="False" size=""/>
+            <declare name="cantidad" type="Integer" array="False" size=""/>
+            <declare name="idLibro" type="Integer" array="False" size=""/>
+            <declare name="posicionLibro" type="Integer" array="False" size=""/>
+            <declare name="disponible" type="Boolean" array="False" size=""/>
+            <output expression="&quot;Ingrese su usuario:&quot;" newline="True"/>
+            <input variable="nombre"/>
+            <output expression="&quot;Ingrese su clave:&quot;" newline="True"/>
+            <input variable="clave"/>
+            <declare name="intentos" type="Integer" array="False" size=""/>
+            <declare name="rol" type="Integer" array="False" size=""/>
+            <assign variable="intentos" expression="0"/>
+            <if expression="(nombre = &quot;admin&quot; and clave = &quot;admin123&quot;) or (nombre = &quot;lector&quot; and clave = &quot;1234&quot;)">
+                <then>
+                    <if expression="nombre = &quot;admin&quot;">
+                        <then>
+                            <output expression="&quot;Mostrar menu administrador&quot;" newline="True"/>
+                            <output expression="&quot;Opciones: registrar usuario, registrar libro, listar, buscar, prestar, devolver y mostrar reporte&quot;" newline="True"/>
+                            <output expression="&quot;Seleccionar opcion del menu&quot;" newline="True"/>
+                            <output expression="&quot;Seleccionar registrar libro&quot;" newline="True"/>
+                            <output expression="&quot;Ingrese el titulo del libro&quot;" newline="True"/>
+                            <input variable="titulo"/>
+                            <output expression="&quot;Ingrese el autor&quot;" newline="True"/>
+                            <input variable="autor"/>
+                            <output expression="&quot;Ingrese la cantidad&quot;" newline="True"/>
+                            <input variable="cantidad"/>
+                            <if expression="">
+                                <then>
+                                    <output expression="&quot;Libro registrado correctamente&quot;" newline="True"/>
+                                </then>
+                                <else>
+                                    <output expression="&quot;La cantidad debe ser mayor que cero&quot;" newline="True"/>
+                                </else>
+                            </if>
+                            <output expression="&quot;Seleccionar prestar libro&quot;" newline="True"/>
+                            <output expression="&quot;Ingrese el ID del libro&quot;" newline="True"/>
+                            <input variable="idLibro"/>
+                            <output expression="&quot;Verificar si el libro existe&quot;" newline="True"/>
+                            <if expression="idLibro &gt; 0">
+                                <then>
+                                    <output expression="&quot;Verificar disponibilidad del libro&quot;" newline="True"/>
+                                    <if expression="disponible = verdadero">
+                                        <then>
+                                            <output expression="&quot;Registrar prestamo y restar un ejemplar&quot;" newline="True"/>
+                                        </then>
+                                        <else>
+                                            <output expression="&quot;No hay ejemplares disponibles&quot;" newline="True"/>
+                                        </else>
+                                    </if>
+                                </then>
+                                <else>
+                                    <output expression="&quot;No existe un libro con ese ID&quot;" newline="True"/>
+                                </else>
+                            </if>
+                            <output expression="&quot;El administrador selecciona cerrar sesion&quot;" newline="True"/>
+                            <output expression="&quot;Fin de la sesion&quot;" newline="True"/>
+                        </then>
+                        <else>
+                            <output expression="&quot;Mostrar menu lector&quot;" newline="True"/>
+                            <output expression="&quot;Opciones: listar libros, buscar libro y mostrar ayuda&quot;" newline="True"/>
+                            <output expression="&quot;Seleccionar opcion del menu&quot;" newline="True"/>
+                            <output expression="&quot;El lector selecciona cerrar sesion&quot;" newline="True"/>
+                            <output expression="&quot;Fin de la sesion&quot;" newline="True"/>
+                        </else>
+                    </if>
+                </then>
+                <else>
+                    <output expression="&quot;Usuario o clave incorrectos&quot;" newline="True"/>
+                    <assign variable="intentos" expression="intentos + 1"/>
+                    <if expression="intentos &lt; 3">
+                        <then>
+                            <output expression="&quot;Intente nuevamente&quot;" newline="True"/>
+                        </then>
+                        <else>
+                            <output expression="&quot;Se agotaron los intentos&quot;" newline="True"/>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>
