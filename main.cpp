@@ -17,23 +17,19 @@ int totalUsuarios = 0;
 
 // Crear usuarios iniciales
 void inicializarUsuarios() {
-
     usuarios[0] = {1, "admin", "admin123", 1};
     usuarios[1] = {2, "lector", "1234", 2};
-
     totalUsuarios = 2;
 }
 
 // Funcion para iniciar sesion
 int login() {
-
     string nombre;
     string clave;
 
     cout << "\n===== INICIO DE SESION =====" << endl;
 
     for (int intento = 1; intento <= 3; intento++) {
-
         cout << "Usuario: ";
         cin >> nombre;
 
@@ -41,12 +37,10 @@ int login() {
         cin >> clave;
 
         for (int i = 0; i < totalUsuarios; i++) {
-
             if (usuarios[i].nombre == nombre &&
                 usuarios[i].clave == clave) {
 
                 cout << "\nBienvenido " << nombre << "!" << endl;
-
                 return i;
             }
         }
@@ -58,25 +52,99 @@ int login() {
     return -1;
 }
 
+// Registrar un nuevo usuario
+void registrarUsuario() {
+    if (totalUsuarios >= 100) {
+        cout << "\nNo se pueden registrar mas usuarios." << endl;
+        return;
+    }
+
+    string nombre;
+    string clave;
+    int rol;
+    bool existe = false;
+
+    cout << "\n===== REGISTRO DE USUARIO =====" << endl;
+
+    cout << "Ingrese el nombre de usuario: ";
+    cin >> nombre;
+
+    // Verificar si el usuario ya existe
+    for (int i = 0; i < totalUsuarios; i++) {
+        if (usuarios[i].nombre == nombre) {
+            existe = true;
+        }
+    }
+
+    if (existe == true) {
+        cout << "Ese nombre de usuario ya existe." << endl;
+    } else {
+        cout << "Ingrese la clave: ";
+        cin >> clave;
+
+        cout << "\nSeleccione el rol:" << endl;
+        cout << "1. Administrador" << endl;
+        cout << "2. Lector" << endl;
+        cout << "Opcion: ";
+        cin >> rol;
+
+        if (rol == 1 || rol == 2) {
+            usuarios[totalUsuarios].id = totalUsuarios + 1;
+            usuarios[totalUsuarios].nombre = nombre;
+            usuarios[totalUsuarios].clave = clave;
+            usuarios[totalUsuarios].rol = rol;
+
+            totalUsuarios++;
+
+            cout << "\nUsuario registrado correctamente." << endl;
+        } else {
+            cout << "\nOpcion de rol no valida." << endl;
+        }
+    }
+}
+
+// Menu del administrador
+void menuAdministrador() {
+    int opcion;
+
+    do {
+        cout << "\n===== MENU ADMINISTRADOR =====" << endl;
+        cout << "1. Registrar usuario" << endl;
+        cout << "2. Cerrar sesion" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                registrarUsuario();
+                break;
+
+            case 2:
+                cout << "\nCerrando sesion..." << endl;
+                break;
+
+            default:
+                cout << "\nOpcion no valida." << endl;
+        }
+
+    } while (opcion != 2);
+}
+
 // Programa principal
 int main() {
-
     inicializarUsuarios();
 
     int posicion = login();
 
     if (posicion != -1) {
-
         if (usuarios[posicion].rol == 1) {
             cout << "Has ingresado como ADMINISTRADOR." << endl;
-        }
-        else {
+            menuAdministrador();
+        } else {
             cout << "Has ingresado como LECTOR." << endl;
         }
-
-    }
-    else {
-        cout << "Se agotaron los intentos." << endl;
+    } else {
+        cout << "\nSe agotaron los intentos." << endl;
     }
 
     return 0;
