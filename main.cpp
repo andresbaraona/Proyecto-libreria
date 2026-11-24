@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 
 // Estructura de los usuarios
@@ -44,6 +45,29 @@ void inicializarUsuarios() {
     usuarios[0] = {1, "admin", "admin123", 1};
     usuarios[1] = {2, "lector", "1234", 2};
     totalUsuarios = 2;
+}
+
+// Cargar libros desde el archivo de texto
+void cargarLibros() {
+    ifstream archivo("libros.txt");
+
+    if (archivo.is_open()) {
+        while (totalLibros < 100 &&
+               getline(archivo, libros[totalLibros].titulo, ';')) {
+
+            getline(archivo, libros[totalLibros].autor, ';');
+            archivo >> libros[totalLibros].cantidad;
+            archivo.ignore();
+
+            libros[totalLibros].id = totalLibros + 1;
+            totalLibros++;
+        }
+
+        archivo.close();
+        cout << "Libros cargados correctamente." << endl;
+    } else {
+        cout << "No se pudo abrir el archivo de libros." << endl;
+    }
 }
 
 // Funcion para iniciar sesion
@@ -450,6 +474,7 @@ void menuLector() {
 // Programa principal
 int main() {
     inicializarUsuarios();
+    cargarLibros();
 
     int posicion = login();
 
