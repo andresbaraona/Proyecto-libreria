@@ -416,17 +416,27 @@ void menuLector() {
 
     do {
         cout << "\n===== MENU LECTOR =====" << endl;
-        cout << "1. Mostrar ayuda" << endl;
-        cout << "2. Cerrar sesion" << endl;
+        cout << "1. Listar libros" << endl;
+        cout << "2. Buscar libro" << endl;
+        cout << "3. Mostrar ayuda" << endl;
+        cout << "4. Cerrar sesion" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcion;
 
         switch (opcion) {
             case 1:
-                mostrarAyuda();
+                listarLibros();
                 break;
 
             case 2:
+                buscarLibro();
+                break;
+
+            case 3:
+                mostrarAyuda();
+                break;
+
+            case 4:
                 cout << "\nCerrando sesion..." << endl;
                 break;
 
@@ -434,7 +444,7 @@ void menuLector() {
                 cout << "\nOpcion no valida." << endl;
         }
 
-    } while (opcion != 2);
+    } while (opcion != 4);
 }
 
 // Programa principal
